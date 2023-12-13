@@ -1,30 +1,53 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+export default {
+  data() {
+    return {
+      title: 'My New Vue Title',
+      message: 'Welcome to Vue',
+      textStatus: {
+        isRed: true,
+      },
+      users: [
+        {
+          firstName: 'Taro',
+          lastName: 'Yamada',
+          isMember: true,
+        },
+        {
+          firstName: 'Tanaka',
+          lastName: 'Yamada',
+          isMember: false,
+        },
+        {
+          firstName: 'Tabuchi',
+          lastName: 'Yamada',
+          isMember: true,
+        },
+      ],
+    }
+  },
+  computed: {
+    fullName() {
+      return this.user.firstName + ' ' + this.user.lastName
+    },
+  },
+}
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <h1 v-bind:title="message" v-bind:class="textStatus">
+    {{ title }}
+  </h1>
+  <h2>ユーザーのデータ</h2>
+  <div v-for="user in users">
+    <p>Name: {{ user.firstName + ' ' + user.lastName }}</p>
+    <p v-if="user.isMember">メンバーです</p>
+    <p v-else>メンバーではありません</p>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+<style>
+.red {
+  color: red;
 }
 </style>
