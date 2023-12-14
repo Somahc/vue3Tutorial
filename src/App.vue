@@ -7,16 +7,15 @@ export default {
   },
   data() {
     return {
-      newTodoText: '',
       todos: [{ isDone: false, text: 'ToDoの文字列' }],
     }
   },
   methods: {
-    addTodo() {
-      if (!this.newTodoText) return alert('文字を入力してください')
+    addTodo(newTodoText) {
+      if (!newTodoText) return alert('文字を入力してください')
       this.todos.push({
         isDone: false,
-        text: this.newTodoText,
+        text: newTodoText,
       })
       this.newTodoText = ''
     },
