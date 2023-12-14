@@ -1,66 +1,47 @@
 <script>
+import ToDoAdd from './components/ToDoAdd.vue'
+
 export default {
+  components: {
+    ToDoAdd,
+  },
   data() {
     return {
-      taskStatus: {
-        isDone: false,
-      },
-      tasks: [
-        {
-          taskName: 'Vueをマスターする',
-          isDone: true,
-        },
-        {
-          taskName: '牛乳を買う',
-          isDone: false,
-        },
-        {
-          taskName: '家賃を払う',
-          isDone: false,
-        },
-      ],
-      input: {
-        taskName: '',
-        isDone: false,
-      },
+      newTodoText: '',
+      todos: [{ isDone: false, text: 'ToDoの文字列' }],
     }
   },
   methods: {
-    addTask() {
-      if (!this.input.taskName) {
-        alert('タスク名を入力してください')
-        return
-      }
-      this.tasks.push(this.input)
-      this.input = {
-        taskName: '',
+    addTodo() {
+      if (!this.newTodoText) return alert('文字を入力してください')
+      this.todos.push({
         isDone: false,
-      }
+        text: this.newTodoText,
+      })
+      this.newTodoText = ''
     },
-    removeTask() {
-      this.tasks = this.tasks.filter((task) => !task.isDone)
+    clearDoneTodos() {
+      this.todos = this.todos.filter((todo) => !todo.isDone)
     },
   },
-  computed: {},
 }
 </script>
 
 <template>
   <h1>My ToDo App</h1>
-  <input type="text" v-model="input.taskName" /><button @click="addTask">
+  <ToDoAdd @delete-done="clearDoneTodos" @add-todo="addTodo" />
+  <!-- <input type="text" v-model="newTodoText" /><button @click="addTodo">
     追加</button
-  ><button @click="removeTask">完了済みを削除する</button>
-  <div v-if="tasks.length === 0">タスクがありません</div>
-  <div v-else>
-    <ul>
-      <li v-for="task in tasks">
-        <input type="checkbox" v-model="task.isDone" /><span
-          v-bind:class="{ 'todo-done': task.isDone }"
-          >{{ task.taskName }}</span
-        >
-      </li>
-    </ul>
-  </div>
+  ><button @click="clearDoneTodos">完了済みを削除する</button> -->
+  <p v-if="todos.length === 0">ToDoがまだありません！</p>
+  <ul v-else>
+    <li v-for="todo in todos">
+      <input type="checkbox" v-model="todo.isDone" /><span
+        :class="{ 'todo-done': todo.isDone }"
+        >{{ todo.text }}</span
+      >
+    </li>
+  </ul>
 </template>
 
 <style>
