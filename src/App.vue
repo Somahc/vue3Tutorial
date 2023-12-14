@@ -1,13 +1,15 @@
 <script>
 import ToDoAdd from './components/ToDoAdd.vue'
+import TodoList from './components/TodoList.vue'
 
 export default {
   components: {
     ToDoAdd,
+    TodoList,
   },
   data() {
     return {
-      todos: [{ isDone: false, text: 'ToDoの文字列' }],
+      todos: [],
     }
   },
   methods: {
@@ -29,10 +31,12 @@ export default {
 <template>
   <h1>My ToDo App</h1>
   <ToDoAdd @delete-done="clearDoneTodos" @add-todo="addTodo" />
+  <p v-if="todos.length === 0">ToDoがまだありません！</p>
+  <TodoList v-else :todoss="todos" />
   <!-- <input type="text" v-model="newTodoText" /><button @click="addTodo">
     追加</button
   ><button @click="clearDoneTodos">完了済みを削除する</button> -->
-  <p v-if="todos.length === 0">ToDoがまだありません！</p>
+  <!-- <p v-if="todos.length === 0">ToDoがまだありません！</p>
   <ul v-else>
     <li v-for="todo in todos">
       <input type="checkbox" v-model="todo.isDone" /><span
@@ -40,7 +44,7 @@ export default {
         >{{ todo.text }}</span
       >
     </li>
-  </ul>
+  </ul> -->
 </template>
 
 <style>
