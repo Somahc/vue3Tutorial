@@ -7,6 +7,11 @@ export default {
       textStatus: {
         isRed: true,
       },
+      input: {
+        firstName: '',
+        lastName: '',
+        isMember: true,
+      },
       users: [
         {
           firstName: 'Taro',
@@ -27,8 +32,18 @@ export default {
     }
   },
   computed: {
-    fullName() {
-      return this.user.firstName + ' ' + this.user.lastName
+    isButtonDisabed() {
+      return !this.input.firstName || !this.input.lastName
+    },
+  },
+  methods: {
+    addUser() {
+      this.users.push(this.input)
+      this.input = {
+        firstName: '',
+        lastName: '',
+        isMember: true,
+      }
     },
   },
 }
@@ -38,9 +53,14 @@ export default {
   <h1 v-bind:title="message" v-bind:class="textStatus">
     {{ title }}
   </h1>
+  <input type="text" v-model="input.firstName" />
+  <input type="text" v-model="input.lastName" />
+  <input type="checkbox" v-model="input.isMember" />
+  <button @click="addUser" :disabled="isButtonDisabed">ユーザー追加</button>
   <h2>ユーザーのデータ</h2>
   <div v-for="user in users">
     <p>Name: {{ user.firstName + ' ' + user.lastName }}</p>
+    <!-- <p>{{ fullName }}</p> -->
     <p v-if="user.isMember">メンバーです</p>
     <p v-else>メンバーではありません</p>
   </div>
